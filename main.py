@@ -93,6 +93,9 @@ dfmerged["Walking"] = dfmerged["Walking"].apply(convertKg)
 dfmerged = dfmerged.replace(to_replace = " hours", value = "", regex = True)
 dfmerged = dfmerged.replace(to_replace = " hour", value = "", regex = True)
 
+# remove percentage sign
+dfmerged['New Year Resolution'] = dfmerged['New Year Resolution'].replace(to_replace= "%", value = "", regex = True)
+
 dfmerged['Red Meat CO2'] = dfmerged['Red Meat'].apply(lambda x: carbon.calculateCO2('red meat', x))
 dfmerged['Grains CO2'] = dfmerged['Grains'].apply(lambda x: carbon.calculateCO2('Grains', x))
 dfmerged['Dairy CO2'] = dfmerged['Dairy'].apply(lambda x: carbon.calculateCO2('Dairy', x))
@@ -102,6 +105,10 @@ dfmerged['Computer CO2'] = dfmerged['Computer'].apply(lambda x: carbon.calculate
 dfmerged['Car CO2'] = dfmerged['Car'].apply(lambda x: carbon.calculateCO2('Car', x))
 dfmerged['Public Transport CO2'] = dfmerged['Public Transport'].apply(lambda x: carbon.calculateCO2('Public Transport', x))
 dfmerged['Walking CO2'] = dfmerged['Walking'].apply(lambda x: carbon.calculateCO2('Walking', x))
+
+dfmerged['Total'] = dfmerged['Red Meat CO2'] + dfmerged['Grains CO2'] + dfmerged['Dairy CO2'] + dfmerged['Cellphone CO2'] + dfmerged['TV CO2'] + dfmerged['Computer CO2'] + dfmerged['Car CO2'] + dfmerged['Public Transport CO2'] + dfmerged['Walking CO2']
+dfmerged['Resolution Total'] = (1 - (dfmerged['New Year Resolution'].astype(float))/100) * dfmerged['Total']
+
 print(df)
 
 print(dfmerged)
