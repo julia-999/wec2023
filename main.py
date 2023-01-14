@@ -123,6 +123,7 @@ newDf = dfmerged[['Username','Red Meat CO2','Grains CO2','Dairy CO2','Cellphone 
 
 fig, ax = plt.subplots()
 
+# Create graph and set names
 newDf.plot(kind='bar',ax=ax)
 ax.set_xlabel('Name')
 ax.set_ylabel('CO2 Amount')
@@ -130,7 +131,8 @@ ax.set_title('CO2 Amounts by Director')
 ax.set_xticklabels(newDf['Username'])
 
 plt.show()
-
+# Save plot
+plt.savefig('allData.png')
 
 totalNewDf = dfmerged[['Username','Total','Resolution Total']]
 
@@ -143,4 +145,5 @@ ax.set_title('Total vs Resolution Total')
 ax.set_xticklabels(totalNewDf['Username'])
 
 plt.show()
+plt.savefig('totalData.png')
 
