@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# Sample data frame
 df = pd.DataFrame({'Red Meat': ['100 pounds', '89 pounds', '75 pounds'],
                    'Grains': ['2 pounds', '167 pounds', '98 pounds'],
                    'Dairy': ['200 pounds', '42 pounds', '135 pounds'],
@@ -9,17 +10,19 @@ df = pd.DataFrame({'Red Meat': ['100 pounds', '89 pounds', '75 pounds'],
                    'Computer': ['130 hours', '88 hours', '102 hours'],
                    })
 
-def convert_to_kg(weight):
+# Function to convert to kg
+def convertKg(weight):
     return round(float(weight.split()[0]) * 0.453592, 2)
 
-df["Red Meat"] = df["Red Meat"].apply(convert_to_kg)
-df["Grains"] = df["Grains"].apply(convert_to_kg)
-df["Dairy"] = df["Dairy"].apply(convert_to_kg)
+# Change columns by using the conversion function
+df["Red Meat"] = df["Red Meat"].apply(convertKg)
+df["Grains"] = df["Grains"].apply(convertKg)
+df["Dairy"] = df["Dairy"].apply(convertKg)
 
-df.rename(columns=lambda x: x.replace("pounds","kg"), inplace=True)
-
+# Remove the word hours from data
 df = df.replace(to_replace = " hours", value = "", regex = True)
 
+# Convert numerical values to float
 df[['Red Meat','Grains','Dairy','Cellphone','TV','Computer']] = df[['Red Meat','Grains','Dairy','Cellphone','TV','Computer']].astype(float)
 
 print(df)
