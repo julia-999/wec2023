@@ -171,7 +171,8 @@ ax.set_xticklabels(newDf['Username'])
 
 #plt.show()
 # Save plot
-plt.savefig('allData.png')
+plt.xticks(rotation=90, fontsize=5)
+plt.savefig('allData.png',dpi=300)
 
 totalNewDf = dfmerged[['Username','Total','Resolution Total']]
 
@@ -184,6 +185,7 @@ ax.set_title('Total vs Resolution Total')
 ax.set_xticklabels(totalNewDf['Username'])
 
 #plt.show()
+plt.xticks(rotation=90,fontsize=5)
 plt.savefig('totalData.png')
 
 
