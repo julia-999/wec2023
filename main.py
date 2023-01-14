@@ -118,28 +118,6 @@ print(dfmerged)
 
 # %%
 
-# STACKED BAR GRAPH
-#fig, ax = plt.subplots()
-
-#ax.bar(dfmerged['Username'], dfmerged['Red Meat CO2'], label='Red Meat')
-#ax.bar(dfmerged['Username'], dfmerged['Grains CO2'], label='Grains', bottom=dfmerged['Red Meat CO2'])
-#ax.bar(dfmerged['Username'], dfmerged['Dairy CO2'], label='Dairy')
-#ax.bar(dfmerged['Username'], dfmerged['Cellphone CO2'], label='Cellphone')
-#ax.bar(dfmerged['Username'], dfmerged['TV CO2'], label='TV')
-#ax.bar(dfmerged['Username'], dfmerged['Computer CO2'], label='Computer')
-#ax.bar(dfmerged['Username'], dfmerged['Car CO2'], label='Car')
-#ax.bar(dfmerged['Username'], dfmerged['Walking CO2'], label='Walking')
-#ax.bar(dfmerged['Username'], dfmerged['Public Transport CO2'], label='Public Transport')
-
-#ax.set_ylabel('Amount of CO2')
-#ax.set_title('CO2 by Director')
-#ax.legend()
-
-#plt.xticks(rotation=80)
-#plt.ylim(0, 500)
-
-#plt.show()
-
 newDf = dfmerged[['Username','Red Meat CO2','Grains CO2','Dairy CO2','Cellphone CO2','TV CO2','Computer CO2','Car CO2','Public Transport CO2','Walking CO2']]
 
 
@@ -147,18 +125,22 @@ fig, ax = plt.subplots()
 
 newDf.plot(kind='bar',ax=ax)
 ax.set_xlabel('Name')
-ax.set_ylabel('Weight')
-ax.set_title('Weight of food items')
+ax.set_ylabel('CO2 Amount')
+ax.set_title('CO2 Amounts by Director')
 ax.set_xticklabels(newDf['Username'])
 
 plt.show()
 
 
-plt.bar(dfmerged['Username'],dfmerged['Red Meat CO2'])
-plt.xlabel('Name')
-plt.ylabel('Total CO2')
-plt.title('Total CO2 by Director')
-plt.xticks(rotation=80)
+totalNewDf = dfmerged[['Username','Total','Resolution Total']]
+
+fig, ax = plt.subplots()
+
+totalNewDf.plot(kind='bar',ax=ax)
+ax.set_xlabel('Name')
+ax.set_ylabel('CO2 Amount')
+ax.set_title('Total vs Resolution Total')
+ax.set_xticklabels(totalNewDf['Username'])
 
 plt.show()
 
