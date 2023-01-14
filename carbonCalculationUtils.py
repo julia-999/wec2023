@@ -5,7 +5,7 @@ carbonMultiplier = {
     "grains": 3.7,
     "dairy": 6.3,
     "cellphone": 3.6,
-    "TV": 6.8,
+    "tv": 6.8,
     "computer": 4.2,
     "walking": 0,
     "car": 6.5,
