@@ -1,5 +1,6 @@
 
 # %%
+import numpy as np
 import pandas as pd
 import json
 import warnings
@@ -92,41 +93,65 @@ dfmerged["Walking"] = dfmerged["Walking"].apply(convertKg)
 dfmerged = dfmerged.replace(to_replace = " hours", value = "", regex = True)
 dfmerged = dfmerged.replace(to_replace = " hour", value = "", regex = True)
 
-dfmerged['Red Meat C02'] = dfmerged['Red Meat'].apply(lambda x: carbon.calculateCO2('red meat', x))
-dfmerged['Grains C02'] = dfmerged['Grains'].apply(lambda x: carbon.calculateCO2('Grains', x))
-dfmerged['Dairy C02'] = dfmerged['Dairy'].apply(lambda x: carbon.calculateCO2('Dairy', x))
-dfmerged['Cellphone C02'] = dfmerged['Cellphone'].apply(lambda x: carbon.calculateCO2('Cellphone', x))
-dfmerged['TV C02'] = dfmerged['TV'].apply(lambda x: carbon.calculateCO2('TV', x))
-dfmerged['Computer C02'] = dfmerged['Computer'].apply(lambda x: carbon.calculateCO2('Computer', x))
-dfmerged['Car C02'] = dfmerged['Car'].apply(lambda x: carbon.calculateCO2('Car', x))
-dfmerged['Public Transport C02'] = dfmerged['Public Transport'].apply(lambda x: carbon.calculateCO2('Public Transport', x))
-dfmerged['Walking C02'] = dfmerged['Walking'].apply(lambda x: carbon.calculateCO2('Walking', x))
+dfmerged['Red Meat CO2'] = dfmerged['Red Meat'].apply(lambda x: carbon.calculateCO2('red meat', x))
+dfmerged['Grains CO2'] = dfmerged['Grains'].apply(lambda x: carbon.calculateCO2('Grains', x))
+dfmerged['Dairy CO2'] = dfmerged['Dairy'].apply(lambda x: carbon.calculateCO2('Dairy', x))
+dfmerged['Cellphone CO2'] = dfmerged['Cellphone'].apply(lambda x: carbon.calculateCO2('Cellphone', x))
+dfmerged['TV CO2'] = dfmerged['TV'].apply(lambda x: carbon.calculateCO2('TV', x))
+dfmerged['Computer CO2'] = dfmerged['Computer'].apply(lambda x: carbon.calculateCO2('Computer', x))
+dfmerged['Car CO2'] = dfmerged['Car'].apply(lambda x: carbon.calculateCO2('Car', x))
+dfmerged['Public Transport CO2'] = dfmerged['Public Transport'].apply(lambda x: carbon.calculateCO2('Public Transport', x))
+dfmerged['Walking CO2'] = dfmerged['Walking'].apply(lambda x: carbon.calculateCO2('Walking', x))
 print(df)
 
 print(dfmerged)
 
 # Convert values to float
-dfmerged[['Red Meat','Grains','Dairy','Cellphone','TV','Computer','Car','Walking','Public Transport']] = dfmerged[['Red Meat','Grains','Dairy','Cellphone','TV','Computer','Car','Walking','Public Transport']].astype(float)
+#dfmerged[['Red Meat CO2','Grains CO2','Dairy CO2','Cellphone CO2','TV CO2','Computer CO2','Car CO2','Walking CO2','Public Transport CO2']] = dfmerged[['Red Meat CO2','Grains CO2','Dairy CO2','Cellphone CO2','TV CO2','Computer CO2','Car CO2','Walking CO2','Public Transport CO2']].astype(float)
 
 # %%
 
-fig, ax = plt.subplots()
+# STACKED BAR GRAPH
+#fig, ax = plt.subplots()
 
-ax.bar(dfmerged['Username'], dfmerged['Red Meat'], label='Red Meat')
-ax.bar(dfmerged['Username'], dfmerged['Grains'], label='Grains')
-ax.bar(dfmerged['Username'], dfmerged['Dairy'], label='Dairy')
-ax.bar(dfmerged['Username'], dfmerged['Cellphone'], label='Cellphone')
-ax.bar(dfmerged['Username'], dfmerged['TV'], label='TV')
-ax.bar(dfmerged['Username'], dfmerged['Computer'], label='Computer')
-ax.bar(dfmerged['Username'], dfmerged['Car'], label='Car')
-ax.bar(dfmerged['Username'], dfmerged['Walking'], label='Walking')
-ax.bar(dfmerged['Username'], dfmerged['Public Transport'], label='Public Transport')
+#ax.bar(dfmerged['Username'], dfmerged['Red Meat CO2'], label='Red Meat')
+#ax.bar(dfmerged['Username'], dfmerged['Grains CO2'], label='Grains', bottom=dfmerged['Red Meat CO2'])
+#ax.bar(dfmerged['Username'], dfmerged['Dairy CO2'], label='Dairy')
+#ax.bar(dfmerged['Username'], dfmerged['Cellphone CO2'], label='Cellphone')
+#ax.bar(dfmerged['Username'], dfmerged['TV CO2'], label='TV')
+#ax.bar(dfmerged['Username'], dfmerged['Computer CO2'], label='Computer')
+#ax.bar(dfmerged['Username'], dfmerged['Car CO2'], label='Car')
+#ax.bar(dfmerged['Username'], dfmerged['Walking CO2'], label='Walking')
+#ax.bar(dfmerged['Username'], dfmerged['Public Transport CO2'], label='Public Transport')
 
-ax.set_ylabel('Amount of CO2')
-ax.set_title('CO2 by Director')
-ax.legend()
+#ax.set_ylabel('Amount of CO2')
+#ax.set_title('CO2 by Director')
+#ax.legend()
 
-plt.xticks(rotation=80)
+#plt.xticks(rotation=80)
 #plt.ylim(0, 500)
 
+#plt.show()
+
+newDf = dfmerged[['Username','Red Meat CO2','Grains CO2','Dairy CO2','Cellphone CO2','TV CO2','Computer CO2','Car CO2','Public Transport CO2','Walking CO2']]
+
+
+fig, ax = plt.subplots()
+
+newDf.plot(kind='bar',ax=ax)
+ax.set_xlabel('Name')
+ax.set_ylabel('Weight')
+ax.set_title('Weight of food items')
+ax.set_xticklabels(newDf['Username'])
+
 plt.show()
+
+
+plt.bar(dfmerged['Username'],dfmerged['Red Meat CO2'])
+plt.xlabel('Name')
+plt.ylabel('Total CO2')
+plt.title('Total CO2 by Director')
+plt.xticks(rotation=80)
+
+plt.show()
+
