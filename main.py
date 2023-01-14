@@ -92,27 +92,28 @@ dfmerged = dfmerged.replace(to_replace = " hour", value = "", regex = True)
 
 print(dfmerged)
 
-# Convert numerical values to float
-dfmerged[['Red Meat','Grains','Dairy','Cellphone','TV','Computer']] = dfmerged[['Red Meat','Grains','Dairy','Cellphone','TV','Computer']].astype(float)
+# Convert values to float
+dfmerged[['Red Meat','Grains','Dairy','Cellphone','TV','Computer','Car','Walking','Public Transport']] = dfmerged[['Red Meat','Grains','Dairy','Cellphone','TV','Computer','Car','Walking','Public Transport']].astype(float)
 
 # %%
 
-food_df = dfmerged[['Red Meat','Grains','Dairy']]
-electronics_df = dfmerged[['Cellphone','TV','Computer']]
+fig, ax = plt.subplots()
 
-# Create two subplots
-fig, axs = plt.subplots(1, 2, figsize=(10, 5))
+ax.bar(dfmerged['Username'], dfmerged['Red Meat'], label='Red Meat')
+ax.bar(dfmerged['Username'], dfmerged['Grains'], label='Grains')
+ax.bar(dfmerged['Username'], dfmerged['Dairy'], label='Dairy')
+ax.bar(dfmerged['Username'], dfmerged['Cellphone'], label='Cellphone')
+ax.bar(dfmerged['Username'], dfmerged['TV'], label='TV')
+ax.bar(dfmerged['Username'], dfmerged['Computer'], label='Computer')
+ax.bar(dfmerged['Username'], dfmerged['Car'], label='Car')
+ax.bar(dfmerged['Username'], dfmerged['Walking'], label='Walking')
+ax.bar(dfmerged['Username'], dfmerged['Public Transport'], label='Public Transport')
 
-# Plot the food data
-food_df.plot(kind='bar',ax=axs[0])
-axs[0].set_xlabel('Index')
-axs[0].set_ylabel('Weight')
-axs[0].set_title('Weight of food items')
+ax.set_ylabel('Amount of CO2')
+ax.set_title('CO2 by Director')
+ax.legend()
 
-# Plot the electronics data
-electronics_df.plot(kind='bar',ax=axs[1])
-axs[1].set_xlabel('Index')
-axs[1].set_ylabel('Usage')
-axs[1].set_title('Usage of electronic devices')
+plt.xticks(rotation=80)
+#plt.ylim(0, 500)
 
 plt.show()
