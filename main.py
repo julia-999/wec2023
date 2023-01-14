@@ -77,6 +77,16 @@ with open('file1.txt') as file:
     html = dfpretty.to_html()
     html = '''
     <style>
+        body {
+            text-align: center;
+            padding: 5px;
+        }
+        
+        h1 {
+            font-size: 14pt; 
+            font-family: Calibri;
+            padding: 4px;
+        }
         
         table {
             font-size: 11pt; 
@@ -84,6 +94,8 @@ with open('file1.txt') as file:
             border-collapse: collapse; 
             border: 1px solid grey;
             background: #cee8f0;
+            margin-left:auto;
+            margin-right:auto;
         
         }
         
@@ -106,6 +118,7 @@ with open('file1.txt') as file:
         }
     
         </style>
+        <h1>Carbon Calculations - Engineers 4</h1><div>
         ''' + html
 
     # print(dfmerged['Controller', 'Endpoint', 'Type_x'])
@@ -171,8 +184,8 @@ ax.set_xticklabels(newDf['Username'])
 
 #plt.show()
 # Save plot
-plt.xticks(rotation=90, fontsize=5)
-plt.savefig('allData.png',dpi=300)
+plt.xticks(rotation=90,fontsize=5)
+plt.savefig('allData.png', dpi=300)
 
 totalNewDf = dfmerged[['Username','Total','Resolution Total']]
 
@@ -186,10 +199,14 @@ ax.set_xticklabels(totalNewDf['Username'])
 
 #plt.show()
 plt.xticks(rotation=90,fontsize=5)
-plt.savefig('totalData.png')
+plt.savefig('totalData.png', dpi=300)
 
 
-html += '''<img src="allData.png" alt="First Graph"><img src="totalData.png" alt="Second Graph">'''
+html += '''</div><img src="allData.png" alt="First Graph" width="1000px"><img src="totalData.png" alt="Second Graph" width="1000px"><hr><h1>Full Chart:</h1>'''
+
+html2 = dfmerged.to_html()
+
+html += html2
 
 f = open("table.html", "w")
 f.write(html)
