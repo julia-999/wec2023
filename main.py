@@ -4,6 +4,7 @@ import pandas as pd
 import json
 import warnings
 warnings.filterwarnings("ignore")
+import matplotlib.pyplot as plt
 
 pd.set_option('display.max_rows', 1000); pd.set_option('display.max_columns', 1000); pd.set_option('display.width', 1000)
 
@@ -69,6 +70,44 @@ with open('file1.txt') as file:
     # print(dfmerged)
     print(dfmerged[['Username', 'Address', 'Red Meat', 'Grains', 'Dairy', 'Cellphone', 'TV', 'Computer', 'Car', 'Walking', 'Public Transport']])
 
+# NEW PART!!
+# Function to convert to kg
+def convertKg(weight):
+    return round(float(weight.split()[0]) * 0.453592, 2)
 
+# Change columns by using the conversion function
+dfmerged["Red Meat"] = dfmerged["Red Meat"].apply(convertKg)
+dfmerged["Grains"] = dfmerged["Grains"].apply(convertKg)
+dfmerged["Dairy"] = dfmerged["Dairy"].apply(convertKg)
+
+# Remove the word hours from data
+dfmerged = dfmerged.replace(to_replace = " hours", value = "", regex = True)
+dfmerged = dfmerged.replace(to_replace = " hour", value = "", regex = True)
+
+
+print(dfmerged)
+
+# Convert numerical values to float
+dfmerged[['Red Meat','Grains','Dairy','Cellphone','TV','Computer']] = dfmerged[['Red Meat','Grains','Dairy','Cellphone','TV','Computer']].astype(float)
 
 # %%
+
+food_df = dfmerged[['Red Meat','Grains','Dairy']]
+electronics_df = dfmerged[['Cellphone','TV','Computer']]
+
+# Create two subplots
+fig, axs = plt.subplots(1, 2, figsize=(10, 5))
+
+# Plot the food data
+food_df.plot(kind='bar',ax=axs[0])
+axs[0].set_xlabel('Index')
+axs[0].set_ylabel('Weight')
+axs[0].set_title('Weight of food items')
+
+# Plot the electronics data
+electronics_df.plot(kind='bar',ax=axs[1])
+axs[1].set_xlabel('Index')
+axs[1].set_ylabel('Usage')
+axs[1].set_title('Usage of electronic devices')
+
+plt.show()
