@@ -2,6 +2,10 @@
 # %%
 import pandas as pd
 import json
+import warnings
+warnings.filterwarnings("ignore")
+
+pd.set_option('display.max_rows', 1000); pd.set_option('display.max_columns', 1000); pd.set_option('display.width', 1000)
 
 # %%
 with open('file1.txt') as file:
@@ -31,7 +35,7 @@ with open('file1.txt') as file:
                     arr += ', "' + split[0] + '":"' + split[1] + '"'
                 except:
                     print("ERROR" + str(split))
-                    split = str(line).split('\t')
+                    split = str(line).split(':\t')
                     arr += ', "' + split[0] + '":"' + split[1] + '"'
             arr += '}'
             # print(arr)
@@ -49,7 +53,22 @@ with open('file1.txt') as file:
 
 
 
-    print(df)
+    # print(df)
+    dfrequest = df.loc[df['Type'] == 'Request']
+    dfrequest['Endpoint'] = dfrequest['Endpoint'].apply(lambda x: x[5:] if x.startswith("(OWL) ") else x)
+    dfrequest['Controller'] = dfrequest['Controller'].apply(lambda x: x.strip())
+    dfresponse = df.loc[df['Type'] == 'Response']
+    dfresponse['Endpoint'] = dfresponse['Endpoint'].apply(lambda x: x.split("(OWL) ")[1] if x.strip(" ").startswith("(") else x)
+    dfresponse['Controller'] = dfresponse['Controller'].apply(lambda x: x.strip())
+
+    dfmerged = dfrequest.merge(dfresponse, left_on=["Controller", "Endpoint"], right_on=["Controller", "Endpoint"])
+    dfmerged = dfmerged.dropna(axis='columns')
+    dfmerged.columns = dfmerged.columns.to_series().apply(lambda x: x.split("_")[0])
+
+    # print(dfmerged['Controller', 'Endpoint', 'Type_x'])
+    # print(dfmerged)
+    print(dfmerged[['Username', 'Address', 'Red Meat', 'Grains', 'Dairy', 'Cellphone', 'TV', 'Computer', 'Car', 'Walking', 'Public Transport']])
+
 
 
 # %%
