@@ -5,6 +5,11 @@ import json
 import warnings
 warnings.filterwarnings("ignore")
 import matplotlib.pyplot as plt
+from enum import Enum
+
+class Type(Enum):
+    response = '========== Response  =========='
+    request = '========== Request =========='
 
 pd.set_option('display.max_rows', 1000); pd.set_option('display.max_columns', 1000); pd.set_option('display.width', 1000)
 
@@ -27,7 +32,7 @@ with open('file1.txt') as file:
                 # print("response")
                 arr = '{"Type": "Response"'
 
-            while lines[i+1] != '\n':
+            while lines[i+1] != '\n' and not(lines[i+1].strip() == ''):
                 i = i+1
                 line = lines[i].strip('\n')
                 split = str(line).split(": ")
