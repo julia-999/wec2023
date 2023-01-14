@@ -71,6 +71,45 @@ with open('file1.txt') as file:
 
     # print(dfmerged['Controller', 'Endpoint', 'Type_x'])
     # print(dfmerged)
+    dfpretty = dfmerged[['Username', 'Address', 'Red Meat', 'Grains', 'Dairy', 'Cellphone', 'TV', 'Computer', 'Car', 'Walking', 'Public Transport']]
+    # print(dfmerged[['Username', 'Address', 'Red Meat', 'Grains', 'Dairy', 'Cellphone', 'TV', 'Computer', 'Car', 'Walking', 'Public Transport']])
+    print(dfpretty)
+    html = dfpretty.to_html()
+    html = '''
+    <style>
+        
+        table {
+            font-size: 11pt; 
+            font-family: Calibri;
+            border-collapse: collapse; 
+            border: 1px solid grey;
+            background: #cee8f0;
+        
+        }
+        
+        thead th {
+            background: #CBC3E3;
+            text-align: center;
+        }
+        
+        td, th {
+            padding: 4px;
+        }
+        
+        tr:nth-child(even) {
+            background: #ADD8E6;
+        }
+        
+        tr:hover {
+            background: #FFFF00;
+            cursor: pointer;
+        }
+    
+        </style>
+        ''' + html
+
+    # print(dfmerged['Controller', 'Endpoint', 'Type_x'])
+    # print(dfmerged)
     print(dfmerged[['Username', 'Address', 'Red Meat', 'Grains', 'Dairy', 'Cellphone', 'TV', 'Computer', 'Car', 'Walking', 'Public Transport']])
 
 # NEW PART!!
@@ -130,7 +169,7 @@ ax.set_ylabel('CO2 Amount')
 ax.set_title('CO2 Amounts by Director')
 ax.set_xticklabels(newDf['Username'])
 
-plt.show()
+#plt.show()
 # Save plot
 plt.savefig('allData.png')
 
@@ -144,6 +183,13 @@ ax.set_ylabel('CO2 Amount')
 ax.set_title('Total vs Resolution Total')
 ax.set_xticklabels(totalNewDf['Username'])
 
-plt.show()
+#plt.show()
 plt.savefig('totalData.png')
+
+
+html += '''<img src="allData.png" alt="First Graph"><img src="totalData.png" alt="Second Graph">'''
+
+f = open("table.html", "w")
+f.write(html)
+f.close()
 
