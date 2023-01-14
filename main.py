@@ -6,10 +6,7 @@ import warnings
 warnings.filterwarnings("ignore")
 import matplotlib.pyplot as plt
 from enum import Enum
-
-class Type(Enum):
-    response = '========== Response  =========='
-    request = '========== Request =========='
+import carbonCalculationUtils as carbon
 
 pd.set_option('display.max_rows', 1000); pd.set_option('display.max_columns', 1000); pd.set_option('display.width', 1000)
 
@@ -84,11 +81,27 @@ def convertKg(weight):
 dfmerged["Red Meat"] = dfmerged["Red Meat"].apply(convertKg)
 dfmerged["Grains"] = dfmerged["Grains"].apply(convertKg)
 dfmerged["Dairy"] = dfmerged["Dairy"].apply(convertKg)
+dfmerged["Cellphone"] = dfmerged["Cellphone"].apply(convertKg)
+dfmerged["TV"] = dfmerged["TV"].apply(convertKg)
+dfmerged["Computer"] = dfmerged["Computer"].apply(convertKg)
+dfmerged["Car"] = dfmerged["Car"].apply(convertKg)
+dfmerged["Public Transport"] = dfmerged["Public Transport"].apply(convertKg)
+dfmerged["Walking"] = dfmerged["Walking"].apply(convertKg)
 
 # Remove the word hours from data
 dfmerged = dfmerged.replace(to_replace = " hours", value = "", regex = True)
 dfmerged = dfmerged.replace(to_replace = " hour", value = "", regex = True)
 
+dfmerged['Red Meat C02'] = dfmerged['Red Meat'].apply(lambda x: carbon.calculateCO2('red meat', x))
+dfmerged['Grains C02'] = dfmerged['Grains'].apply(lambda x: carbon.calculateCO2('Grains', x))
+dfmerged['Dairy C02'] = dfmerged['Dairy'].apply(lambda x: carbon.calculateCO2('Dairy', x))
+dfmerged['Cellphone C02'] = dfmerged['Cellphone'].apply(lambda x: carbon.calculateCO2('Cellphone', x))
+dfmerged['TV C02'] = dfmerged['TV'].apply(lambda x: carbon.calculateCO2('TV', x))
+dfmerged['Computer C02'] = dfmerged['Computer'].apply(lambda x: carbon.calculateCO2('Computer', x))
+dfmerged['Car C02'] = dfmerged['Car'].apply(lambda x: carbon.calculateCO2('Car', x))
+dfmerged['Public Transport C02'] = dfmerged['Public Transport'].apply(lambda x: carbon.calculateCO2('Public Transport', x))
+dfmerged['Walking C02'] = dfmerged['Walking'].apply(lambda x: carbon.calculateCO2('Walking', x))
+print(df)
 
 print(dfmerged)
 
